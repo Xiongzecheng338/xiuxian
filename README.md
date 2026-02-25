@@ -6,6 +6,16 @@
 
 恭喜你于此茫茫红尘之中，觅得这一处修真入门的清净道场！此仙府专为初入仙途、欲求长生之道的道友打造，从引气入体到与道合真，从吐纳筑基到丹法剑修，尽数收录其中，助你夯实道基、精进修为，在长生路上少走歧路，早登仙途！
 
+![GitHub stars](https://img.shields.io/github/stars/badhope/Visual-Security?style=social)
+![GitHub forks](https://img.shields.io/github/forks/badhope/Visual-Security?style=social)
+![GitHub issues](https://img.shields.io/github/issues/badhope/Visual-Security)
+![GitHub license](https://img.shields.io/github/license/badhope/Visual-Security)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Neuroscience](https://img.shields.io/badge/Neuroscience-005571?style=flat-square&logo=academia&logoColor=white)
+![Optical Art](https://img.shields.io/badge/Optical_Art-FF6F00?style=flat-square&logo=artstation&logoColor=white)
+
 ---
 
 ## 📖 仙府道场 使用指南（助道友修为暴涨）
