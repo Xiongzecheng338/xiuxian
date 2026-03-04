@@ -1,14 +1,14 @@
 // Data definitions
 const realmData = {
-  chu kui: { name:'初窥门径', icon:'窥', color:'bronze', desc:'初入修行之门，感知天地灵气', lifespan:'凡人寿数', stages:['初期-气感初生','中期-灵气感知','后期-引气入体'], abilities:['感知灵气','引气入体','基础吐纳','强身健体'], next:'登堂入室' },
-  deng tang: { name:'登堂入室', icon:'堂', color:'jade', desc:'掌握修行基础，开辟丹田气海', lifespan:'百五十载', stages:['初期-丹田初开','中期-气海成形','后期-气旋初成'], abilities:['开辟丹田','气海成形','轻身术','基础御物'], next:'融会贯通' },
-  rong hui: { name:'融会贯通', icon:'融', color:'azure', desc:'功法与修为融会贯通，道基初现', lifespan:'二百载', stages:['初期-功法入门','中期-招式纯熟','后期-道基初现'], abilities:['御器飞行','神识初显','辟谷不食','五行感知'], next:'炉火纯青' },
-  lu huo: { name:'炉火纯青', icon:'炉', color:'vermilion', desc:'修为精进，如炉火纯青', lifespan:'三百载', stages:['初期-道基稳固','中期-法力大增','后期-神通初显'], abilities:['御剑飞行','神通初显','瞬息千里','寿元大增'], next:'登峰造极' },
-  deng feng: { name:'登峰造极', icon:'峰', color:'gold', desc:'修为达到顶峰，金丹成形', lifespan:'五百载', stages:['初期-金丹初凝','中期-金丹稳固','后期-金丹圆满'], abilities:['金丹大成','御剑飞行','神通广大','移山填海'], next:'出神入化' },
-  chu shen: { name:'出神入化', icon:'神', color:'spirit', desc:'神念通达，元婴出窍', lifespan:'千载', stages:['初期-元婴初生','中期-元婴成长','后期-元婴大成'], abilities:['元婴出窍','瞬移千里','分神化身','夺舍重生'], next:'返璞归真' },
-  fan pu: { name:'返璞归真', icon:'璞', color:'paper', desc:'脱去铅华，返璞归真', lifespan:'三千载', stages:['初期-返璞初现','中期-真意通达','后期-大道可期'], abilities:['虚室生白','真意通达','法则初悟','创造空间'], next:'天人合一' },
-  tian ren: { name:'天人合一', icon:'天', color:'darkgold', desc:'与天地合一，掌控法则', lifespan:'万载', stages:['初期-天人感应','中期-法则掌控','后期-道韵天成'], abilities:['天人感应','法则掌控','不死不灭','创造生灵'], next:'传说境界' },
-  chuan shuo: { name:'传说境界', icon:'传', color:'crimson', desc:'超越天地，成为传说', lifespan:'与天同寿', stages:['初期-传说初成','中期-传说稳固','后期-传说圆满'], abilities:['言出法随','创造世界','超脱轮回','与天同寿'], next:'飞升仙界' }
+  'chu kui': { name:'初窥门径', icon:'窥', color:'bronze', desc:'初入修行之门，感知天地灵气', lifespan:'凡人寿数', stages:['初期-气感初生','中期-灵气感知','后期-引气入体'], abilities:['感知灵气','引气入体','基础吐纳','强身健体'], next:'登堂入室' },
+  'deng tang': { name:'登堂入室', icon:'堂', color:'jade', desc:'掌握修行基础，开辟丹田气海', lifespan:'百五十载', stages:['初期-丹田初开','中期-气海成形','后期-气旋初成'], abilities:['开辟丹田','气海成形','轻身术','基础御物'], next:'融会贯通' },
+  'rong hui': { name:'融会贯通', icon:'融', color:'azure', desc:'功法与修为融会贯通，道基初现', lifespan:'二百载', stages:['初期-功法入门','中期-招式纯熟','后期-道基初现'], abilities:['御器飞行','神识初显','辟谷不食','五行感知'], next:'炉火纯青' },
+  'lu huo': { name:'炉火纯青', icon:'炉', color:'vermilion', desc:'修为精进，如炉火纯青', lifespan:'三百载', stages:['初期-道基稳固','中期-法力大增','后期-神通初显'], abilities:['御剑飞行','神通初显','瞬息千里','寿元大增'], next:'登峰造极' },
+  'deng feng': { name:'登峰造极', icon:'峰', color:'gold', desc:'修为达到顶峰，金丹成形', lifespan:'五百载', stages:['初期-金丹初凝','中期-金丹稳固','后期-金丹圆满'], abilities:['金丹大成','御剑飞行','神通广大','移山填海'], next:'出神入化' },
+  'chu shen': { name:'出神入化', icon:'神', color:'spirit', desc:'神念通达，元婴出窍', lifespan:'千载', stages:['初期-元婴初生','中期-元婴成长','后期-元婴大成'], abilities:['元婴出窍','瞬移千里','分神化身','夺舍重生'], next:'返璞归真' },
+  'fan pu': { name:'返璞归真', icon:'璞', color:'paper', desc:'脱去铅华，返璞归真', lifespan:'三千载', stages:['初期-返璞初现','中期-真意通达','后期-大道可期'], abilities:['虚室生白','真意通达','法则初悟','创造空间'], next:'天人合一' },
+  'tian ren': { name:'天人合一', icon:'天', color:'darkgold', desc:'与天地合一，掌控法则', lifespan:'万载', stages:['初期-天人感应','中期-法则掌控','后期-道韵天成'], abilities:['天人感应','法则掌控','不死不灭','创造生灵'], next:'传说境界' },
+  'chuan shuo': { name:'传说境界', icon:'传', color:'crimson', desc:'超越天地，成为传说', lifespan:'与天同寿', stages:['初期-传说初成','中期-传说稳固','后期-传说圆满'], abilities:['言出法随','创造世界','超脱轮回','与天同寿'], next:'飞升仙界' }
 };
 
 const organData = {
@@ -418,7 +418,7 @@ function showOrganModal(k) {
 }
 
 function showRealmInfo() {
-  showRealmDetail('lianqi');
+  showRealmDetail('chu kui');
 }
 
 // Techniques
@@ -567,46 +567,7 @@ function generateLog() {
   `).join('');
 }
 
-// Meditation
-function startMeditation() {
-  if (isMeditating) return;
-  isMeditating = true;
-  meditationSeconds = 0;
-  elements.meditationStatus.textContent = '冥想中...';
-  elements.meditationStatus.className = 'text-gold text-xs';
-  elements.startMeditation.disabled = true;
-  elements.stopMeditation.disabled = false;
-  elements.stopMeditation.classList.remove('opacity-50');
-  
-  meditationTimer = setInterval(() => {
-    meditationSeconds++;
-    const h = Math.floor(meditationSeconds/3600), m = Math.floor((meditationSeconds%3600)/60), s = meditationSeconds%60;
-    elements.meditationTimer.textContent = 
-      String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-  }, 1000);
-}
-
-function stopMeditation() {
-  if (!isMeditating) return;
-  isMeditating = false;
-  clearInterval(meditationTimer);
-  elements.meditationStatus.textContent = '待机中';
-  elements.meditationStatus.className = 'text-jade text-xs';
-  elements.startMeditation.disabled = false;
-  elements.stopMeditation.disabled = true;
-  elements.stopMeditation.classList.add('opacity-50');
-
-  const mins = Math.floor(meditationSeconds/60);
-  const cur = parseInt(elements.progressText.textContent);
-  const nxt = Math.min(cur + mins, 100);
-  elements.progressText.textContent = nxt + '%';
-  elements.progressBar.style.width = nxt + '%';
-  if (nxt >= 100) {
-    elements.breakthroughs.textContent = parseInt(elements.breakthroughs.textContent) + 1;
-    elements.progressText.textContent = '0%';
-    elements.progressBar.style.width = '0%';
-  }
-}
+// Meditation functions defined later in the file
 
 // Root test
 function startRootTest() {
@@ -1299,7 +1260,6 @@ function startMeditation() {
 function stopMeditation() {
   if (!isMeditating) return;
   isMeditating = false;
-  clearInterval(meditationTimer);
   elements.meditationStatus.textContent = '待机中';
   elements.meditationStatus.className = 'text-jade text-xs';
   elements.startMeditation.disabled = false;
@@ -1390,7 +1350,7 @@ const featureSystems = {
   },
   
   // 秘境系统
- 秘境: {
+  secretLands: {
     'cang jing ge': { name: '藏经阁', desc: '存放古老的猪蹄文化典籍', requirement: '境界达到登堂入室', rewards: ['修炼心法', '丹药配方'] },
     'yao cai yuan': { name: '药菜园', desc: '种植各种天材地宝', requirement: '境界达到融会贯通', rewards: ['稀有药材', '灵气果实'] },
     'zhuan sheng dong': { name: '转生洞', desc: '可重塑体质', requirement: '境界达到炉火纯青', rewards: ['灵根提升', '天赋增强'] },
@@ -1417,13 +1377,22 @@ function checkBottleneck() {
           <div class="p-3 rounded-lg bg-ink/30"><span class="text-jade">当前进度：</span>${userData.practiceHours}小时</div>
         </div>
       `);
+    } else {
+      showModal('境界瓶颈', `
+        <div class="space-y-3">
+          <p class="text-paper/70">恭喜你！你已完成瓶颈任务，可以突破到下一境界了！</p>
+          <div class="p-3 rounded-lg bg-ink/30"><span class="text-gold">任务：</span>${bottleneck.task}</div>
+          <div class="p-3 rounded-lg bg-ink/30"><span class="text-jade">完成状态：</span>已完成</div>
+          <p class="text-gold">继续修炼，积累修为即可突破境界！</p>
+        </div>
+      `);
     }
   }
 }
 
 // 探索秘境
 function exploreSecretLand(secretLandId) {
-  const secretLand = featureSystems.秘境[secretLandId];
+  const secretLand = featureSystems.secretLands[secretLandId];
   const realmRequirement = secretLand.requirement;
   
   // 检查境界是否满足要求
@@ -1500,7 +1469,7 @@ function useArtifact(artifactId) {
 // 显示秘境探索页面
 function showSecretLands() {
   let html = '<div class="grid md:grid-cols-2 gap-4">';
-  for (const [key, secretLand] of Object.entries(featureSystems.秘境)) {
+  for (const [key, secretLand] of Object.entries(featureSystems.secretLands)) {
     html += `
       <div class="glass-card p-4 cursor-pointer" onclick="exploreSecretLand('${key}')">
         <h4 class="font-brush text-lg text-gold mb-2">${secretLand.name}</h4>
