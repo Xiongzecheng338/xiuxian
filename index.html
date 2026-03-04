@@ -4,27 +4,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>太虚仙门 · 问道长生</title>
+<!-- Preconnect to CDN domains -->
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+<!-- Optimized Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
-theme: {
-extend: {
-colors: {
-ink: '#0a0e14',
-paper: '#f5f0e6',
-vermilion: '#c53d43',
-jade: '#5a7e7a',
-gold: '#d4a853',
-azure: '#4a6fa5',
-mystic: '#2d3a4a',
-spirit: '#7eb8a2',
-}
-}
-}
+  theme: {
+    extend: {
+      colors: {
+        ink: '#0a0e14',
+        paper: '#f5f0e6',
+        vermilion: '#c53d43',
+        jade: '#5a7e7a',
+        gold: '#d4a853',
+        azure: '#4a6fa5',
+        mystic: '#2d3a4a',
+        spirit: '#7eb8a2',
+        darkgold: '#b8860b',
+        crimson: '#dc143c',
+        obsidian: '#1a1a2e',
+        bronze: '#cd7f32',
+      }
+    }
+  }
 }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Optimized Google Fonts -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet"></noscript>
+
+<!-- Optimized Font Awesome -->
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+<!-- Language toggle script -->
+<script>
+  function toggleLanguage() {
+    const currentLang = document.documentElement.lang;
+    const newLang = currentLang === 'zh-CN' ? 'en' : 'zh-CN';
+    document.documentElement.lang = newLang;
+    document.getElementById('langToggle').textContent = newLang === 'zh-CN' ? 'EN' : '中文';
+    // Load language content
+    loadLanguageContent(newLang);
+  }
+  
+  function loadLanguageContent(lang) {
+    // This will be implemented in app.js
+  }
+</script>
 <style>
 :root {
 --bg-primary: #0a0e14;
@@ -33,6 +66,9 @@ spirit: '#7eb8a2',
 --text-secondary: #a8a095;
 --accent-gold: #d4a853;
 --accent-jade: #5a7e7a;
+--accent-crimson: #dc143c;
+--accent-darkgold: #b8860b;
+--accent-obsidian: #1a1a2e;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { 
@@ -45,6 +81,20 @@ min-height: 100vh;
 }
 .font-brush { font-family: 'Ma Shan Zheng', cursive; }
 
+/* 古风纹理 */
+.pattern-scroll {
+background-image: 
+  linear-gradient(rgba(212, 168, 83, 0.05) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(212, 168, 83, 0.05) 1px, transparent 1px);
+background-size: 20px 20px;
+}
+
+.pattern-cloud {
+background-image: 
+  radial-gradient(circle at 10% 20%, rgba(212, 168, 83, 0.1) 0%, transparent 20%),
+  radial-gradient(circle at 80% 70%, rgba(220, 20, 60, 0.1) 0%, transparent 25%);
+}
+
 /* 背景效果 */
 .bg-pattern {
 position: fixed;
@@ -52,9 +102,10 @@ inset: 0;
 z-index: 0;
 pointer-events: none;
 background: 
-radial-gradient(ellipse at 20% 20%, rgba(90, 126, 122, 0.1) 0%, transparent 50%),
-radial-gradient(ellipse at 80% 80%, rgba(212, 168, 83, 0.08) 0%, transparent 50%),
-linear-gradient(180deg, rgba(10, 14, 20, 0.9) 0%, rgba(20, 27, 36, 0.95) 100%);
+radial-gradient(ellipse at 20% 20%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+radial-gradient(ellipse at 80% 80%, rgba(212, 168, 83, 0.1) 0%, transparent 50%),
+linear-gradient(180deg, rgba(10, 14, 20, 0.95) 0%, rgba(26, 26, 46, 0.98) 100%);
+will-change: transform;
 }
 
 .stars {
@@ -69,6 +120,7 @@ radial-gradient(1px 1px at 90px 40px, #fff, transparent),
 radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.6), transparent);
 background-size: 200px 200px;
 animation: twinkle 4s ease-in-out infinite;
+will-change: opacity;
 }
 
 @keyframes twinkle {
@@ -92,7 +144,55 @@ from { transform: rotate(0deg); }
 to { transform: rotate(360deg); }
 }
 
-.animate-fade { animation: fadeIn 0.6s ease-out; }
+@keyframes scrollIn {
+from { opacity: 0; transform: translateY(50px) scale(0.95); }
+to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes cloudFloat {
+0%, 100% { transform: translateX(0) translateY(0); }
+25% { transform: translateX(10px) translateY(-5px); }
+50% { transform: translateX(0) translateY(-10px); }
+75% { transform: translateX(-10px) translateY(-5px); }
+}
+
+@keyframes inkSpread {
+0% { transform: scale(0); opacity: 0.8; }
+100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes glow {
+0%, 100% { box-shadow: 0 0 10px rgba(212, 168, 83, 0.5); }
+50% { box-shadow: 0 0 20px rgba(212, 168, 83, 0.8), 0 0 30px rgba(212, 168, 83, 0.4); }
+}
+
+.animate-fade { animation: fadeIn 0.6s ease-out; will-change: opacity, transform; }
+.animate-scroll { animation: scrollIn 0.8s ease-out; will-change: opacity, transform; }
+.animate-cloud { animation: cloudFloat 10s ease-in-out infinite; will-change: transform; }
+.animate-glow { animation: glow 2s ease-in-out infinite; will-change: box-shadow; }
+
+/* 灵气流动效果 */
+.qi-flow {
+position: relative;
+overflow: hidden;
+}
+
+.qi-flow::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(45deg, transparent, rgba(212, 168, 83, 0.1), transparent);
+transform: rotate(45deg);
+animation: qiFlow 3s linear infinite;
+}
+
+@keyframes qiFlow {
+0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
 
 /* 卡片 */
 .glass-card {
@@ -102,12 +202,35 @@ border: 1px solid rgba(212, 168, 83, 0.2);
 border-radius: 12px;
 box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 transition: all 0.3s ease;
+will-change: transform, box-shadow, border-color;
+position: relative;
+overflow: hidden;
+}
+
+.glass-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.5), transparent);
+}
+
+.glass-card::after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.5), transparent);
 }
 
 .glass-card:hover {
-border-color: rgba(212, 168, 83, 0.4);
+border-color: rgba(212, 168, 83, 0.6);
 transform: translateY(-2px);
-box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212, 168, 83, 0.2);
 }
 
 /* 按钮 */
@@ -123,6 +246,24 @@ transition: all 0.3s ease;
 display: inline-flex;
 align-items: center;
 gap: 8px;
+will-change: transform, box-shadow, background;
+position: relative;
+overflow: hidden;
+}
+
+.btn-gold::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.3), transparent);
+transition: left 0.5s ease;
+}
+
+.btn-gold:hover::before {
+left: 100%;
 }
 
 .btn-gold:hover {
@@ -143,11 +284,36 @@ transition: all 0.3s ease;
 display: inline-flex;
 align-items: center;
 gap: 8px;
+will-change: transform, box-shadow, background;
 }
 
 .btn-jade:hover {
 background: linear-gradient(135deg, rgba(90, 126, 122, 0.35), rgba(90, 126, 122, 0.25));
 box-shadow: 0 0 20px rgba(90, 126, 122, 0.3);
+transform: translateY(-2px);
+}
+
+/* 古风按钮 */
+.btn-ancient {
+background: linear-gradient(135deg, rgba(220, 20, 60, 0.25), rgba(212, 168, 83, 0.15));
+border: 1px solid rgba(212, 168, 83, 0.6);
+color: var(--accent-gold);
+padding: 12px 28px;
+border-radius: 8px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+will-change: transform, box-shadow, background;
+font-family: 'Ma Shan Zheng', cursive;
+}
+
+.btn-ancient:hover {
+background: linear-gradient(135deg, rgba(220, 20, 60, 0.35), rgba(212, 168, 83, 0.25));
+box-shadow: 0 0 25px rgba(220, 20, 60, 0.3), 0 0 15px rgba(212, 168, 83, 0.2);
+transform: translateY(-2px);
 }
 
 /* 导航 */
@@ -158,6 +324,7 @@ color: var(--text-secondary);
 transition: all 0.3s ease;
 cursor: pointer;
 border-radius: 6px;
+will-change: color, background;
 }
 
 .nav-link:hover, .nav-link.active {
@@ -235,6 +402,7 @@ border-radius: 12px;
 padding: 24px;
 transition: all 0.3s ease;
 cursor: pointer;
+will-change: transform, box-shadow, border-color;
 }
 
 .feature-card:hover {
@@ -244,16 +412,51 @@ box-shadow: 0 15px 40px rgba(0,0,0,0.4);
 }
 
 /* 响应式 */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
+.taiji { width: 36px; height: 36px; }
+.taiji::before, .taiji::after { width: 18px; height: 18px; }
+.nav-desktop { display: none !important; }
+.mobile-menu-btn { display: flex !important; }
+.glass-card { margin-bottom: 1rem; }
+.grid { gap: 1rem; }
+.btn-gold, .btn-jade, .btn-ancient { padding: 10px 20px; font-size: 0.875rem; }
+.font-brush { font-size: 1.25rem; }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
 .taiji { width: 40px; height: 40px; }
 .taiji::before, .taiji::after { width: 20px; height: 20px; }
 .nav-desktop { display: none !important; }
 .mobile-menu-btn { display: flex !important; }
+.glass-card { margin-bottom: 1.5rem; }
+.grid { gap: 1.5rem; }
 }
 
 @media (min-width: 769px) {
 .mobile-menu-btn { display: none !important; }
 .mobile-nav { display: none !important; }
+}
+
+@media (max-width: 1024px) {
+.page { padding: 1rem; }
+}
+
+/* 移动端手势支持 */
+@media (hover: none) and (pointer: coarse) {
+.btn-gold, .btn-jade, .btn-ancient {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-link {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.feature-card, .glass-card {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
 }
 
 /* 进度条 */
@@ -269,6 +472,7 @@ height: 100%;
 background: linear-gradient(90deg, var(--accent-jade), var(--accent-gold));
 border-radius: 4px;
 transition: width 0.5s ease;
+will-change: width;
 }
 
 /* 弹窗 */
@@ -325,11 +529,15 @@ overflow-y: auto;
 <a class="nav-link" onclick="showPage('legend')">神仙列传</a>
 <a class="nav-link" onclick="showPage('practice')">修行中心</a>
 <a class="nav-link" onclick="showPage('trial')">试炼场</a>
+<a class="nav-link" onclick="showPage('pig')">猪蹄文化</a>
 </nav>
 
+<div class="flex items-center gap-3">
+<button class="text-sm px-3 py-1 rounded-lg border border-gold/30 text-gold hover:bg-gold/10" id="langToggle" onclick="toggleLanguage()">EN</button>
 <button class="mobile-menu-btn hidden w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 text-gold items-center justify-center" onclick="toggleMobileMenu()">
 <i class="fas fa-bars"></i>
 </button>
+</div>
 </div>
 </header>
 
@@ -348,6 +556,7 @@ overflow-y: auto;
 <a class="nav-link text-xl font-brush" onclick="showPage('legend'); toggleMobileMenu();">神仙列传</a>
 <a class="nav-link text-xl font-brush" onclick="showPage('practice'); toggleMobileMenu();">修行中心</a>
 <a class="nav-link text-xl font-brush" onclick="showPage('trial'); toggleMobileMenu();">试炼场</a>
+<a class="nav-link text-xl font-brush" onclick="showPage('pig'); toggleMobileMenu();">猪蹄文化</a>
 </div>
 </div>
 
@@ -622,6 +831,47 @@ overflow-y: auto;
 <i class="fas fa-search mr-2"></i>开始测试
 </button>
 </div>
+
+<div class="glass-card p-4">
+<h3 class="font-brush text-base text-paper mb-3">门派选择</h3>
+<p class="text-paper/60 text-xs mb-3">选择一个适合你的门派</p>
+<div class="space-y-2">
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="chooseSect('qingyun')">
+<span class="text-gold font-brush">青云门</span> - 以猪蹄烹饪技艺闻名
+</button>
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="chooseSect('tianyin')">
+<span class="text-gold font-brush">天音阁</span> - 擅长猪蹄食疗
+</button>
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="chooseSect('huashan')">
+<span class="text-gold font-brush">华山派</span> - 以猪蹄烤制技艺著称
+</button>
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="chooseSect('wudang')">
+<span class="text-gold font-brush">武当派</span> - 融合猪蹄文化与道家修炼
+</button>
+</div>
+</div>
+
+<div class="glass-card p-4">
+<h3 class="font-brush text-base text-paper mb-3">特色系统</h3>
+<p class="text-paper/60 text-xs mb-3">探索更多修行玩法</p>
+<div class="space-y-2">
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="showSecretLands()">
+<span class="text-gold font-brush">秘境探索</span> - 探索隐藏的宝藏
+</button>
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="showArtifacts()">
+<span class="text-gold font-brush">法宝系统</span> - 收集强大的法宝
+</button>
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="showHeritages()">
+<span class="text-gold font-brush">传承系统</span> - 查看修行传承
+</button>
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="showCreateHeritageForm()">
+<span class="text-gold font-brush">创建传承</span> - 留下你的修行心得
+</button>
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="checkBottleneck()">
+<span class="text-gold font-brush">境界瓶颈</span> - 查看突破要求
+</button>
+</div>
+</div>
 <div class="glass-card p-4">
 <h3 class="font-brush text-base text-paper mb-3">每日修行</h3>
 <div class="space-y-2" id="dailyTasks"></div>
@@ -754,6 +1004,24 @@ overflow-y: auto;
 </div>
 </div>
 </div>
+
+<!-- 猪蹄文化页 -->
+<div id="page-pig" class="page max-w-7xl mx-auto">
+<div class="text-center mb-6">
+<h2 class="font-brush text-2xl md:text-3xl text-paper mb-2">猪蹄文化宇宙</h2>
+<p class="text-paper/60 text-sm">探索猪蹄文化的深厚底蕴</p>
+</div>
+
+<div class="flex flex-wrap justify-center gap-2 mb-6">
+<button class="px-4 py-2 rounded-lg border border-gold/30 text-gold bg-gold/10" onclick="showPigTab('history')">历史渊源</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showPigTab('craft')">制作工艺</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showPigTab('culture')">文化价值</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showPigTab('products')">产品展示</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showPigTab('knowledge')">知识图谱</button>
+</div>
+
+<div id="pigContent"></div>
+</div>
 </main>
 
 <!-- 页脚 -->
@@ -768,596 +1036,9 @@ overflow-y: auto;
 <div class="modal-content glass-card p-6" id="modalContent"></div>
 </div>
 
-<script>
-// 数据定义
-const realmData = {
-lianqi: { name:'炼气期', icon:'气', color:'jade', desc:'引天地灵气入体，开辟丹田', lifespan:'百五十载', stages:['初期(1-3层)-气感初生','中期(4-6层)-气旋初成','后期(7-9层)-气海充盈'], abilities:['感应灵气','引气入体','开辟丹田','轻身术'], next:'筑基期' },
-zhuji: { name:'筑基期', icon:'基', color:'azure', desc:'气旋化液，筑建道基', lifespan:'三百载', stages:['初期-道基初成','中期-道基稳固','后期-道基圆满'], abilities:['御器飞行','神识初显','寿元大增','辟谷不食'], next:'金丹期' },
-jindan: { name:'金丹期', icon:'丹', color:'gold', desc:'道基化丹，金丹大成', lifespan:'五百载', stages:['初期-金丹初凝','中期-金丹稳固','后期-金丹圆满'], abilities:['御剑飞行','神通初显','瞬息千里','寿元大增'], next:'元婴期' },
-yuanying: { name:'元婴期', icon:'婴', color:'spirit', desc:'碎丹成婴，元婴出窍', lifespan:'千载', stages:['初期-元婴初生','中期-元婴成长','后期-元婴大成'], abilities:['元婴出窍','瞬移千里','分神化身','夺舍重生'], next:'化神期' },
-huashen: { name:'化神期', icon:'神', color:'vermilion', desc:'元婴化神，神念通达', lifespan:'三千载', stages:['初期-神念初成','中期-神念壮大','后期-神念圆满'], abilities:['神念覆盖','法则初悟','移山填海','创造空间'], next:'返虚期' },
-fanxu: { name:'返虚期', icon:'虚', color:'paper', desc:'炼神还虚，与道合真', lifespan:'万载', stages:['初期-虚空初入','中期-虚空遨游','后期-虚空大成'], abilities:['虚空遨游','法则掌控','不死不灭','创造生灵'], next:'合道期' },
-hedao: { name:'合道期', icon:'道', color:'gold', desc:'身与道合，我即是道', lifespan:'与天同寿', stages:['初期-道心初合','中期-道法自然','后期-道成真仙'], abilities:['言出法随','创造世界','超脱轮回','与天同寿'], next:'飞升仙界' }
-};
+<!-- Optimized JavaScript -->
+<script src="app.js" defer></script>
 
-const organData = {
-lung: { name:'肺', element:'金', color:'jade', realm:'炼气期', desc:'肺主气，司呼吸', practice:'每日清晨面向东方深呼吸' },
-kidney: { name:'肾', element:'水', color:'azure', realm:'筑基期', desc:'肾主水，藏精', practice:'节制房事，按摩肾俞穴' },
-heart: { name:'心', element:'火', color:'vermilion', realm:'金丹期', desc:'心主火，藏神', practice:'静心养神，意守心窍' },
-liver: { name:'肝', element:'木', color:'spirit', realm:'元婴期', desc:'肝主木，藏魂', practice:'保持情绪舒畅，丑时熟睡' },
-spleen: { name:'脾', element:'土', color:'gold', realm:'化神期', desc:'脾主土，藏意', practice:'饮食有节，辰时进食' }
-};
 
-const techniqueData = {
-basic: [
-{ name:'吐纳术', icon:'fa-wind', color:'jade', desc:'采天地之灵气，纳日月之精华', mantra:'吸气观想灵气从百会穴入，呼气浊气从涌泉穴出' },
-{ name:'静心诀', icon:'fa-brain', color:'azure', desc:'心者君主之官，静心者方能入定', mantra:'心如止水，意如明镜' },
-{ name:'引气诀', icon:'fa-water', color:'spirit', desc:'引导灵气入体，开辟经脉', mantra:'意引灵气，循经而行' },
-{ name:'五行功', icon:'fa-yin-yang', color:'gold', desc:'调和五脏，强健体魄', mantra:'金木水火土，五行相生相克' }
-],
-advanced: [
-{ name:'筑基功', icon:'fa-mountain', color:'azure', desc:'气旋化液，筑建道基', mantra:'气旋化液，筑建道基' },
-{ name:'结丹诀', icon:'fa-circle', color:'gold', desc:'道基化丹，金丹大成', mantra:'阴阳相济，坎离交媾' },
-{ name:'婴成诀', icon:'fa-baby', color:'spirit', desc:'碎丹成婴，元婴出窍', mantra:'碎丹成婴，如婴儿新生' }
-],
-special: [
-{ name:'剑修法门', icon:'fa-bolt', color:'paper', desc:'以剑为媒，炼剑成意', mantra:'以剑为媒，人剑合一' },
-{ name:'符修法门', icon:'fa-scroll', color:'jade', desc:'以灵画符，符成法随', mantra:'一笔一划，皆含道韵' },
-{ name:'阵修法门', icon:'fa-th', color:'azure', desc:'布阵困敌，聚灵养气', mantra:'天地为盘，万物为子' }
-]
-};
-
-const alchemyData = {
-dans: [
-{ name:'聚气丹', color:'jade', desc:'加速灵气吸收三成', grade:'下品', price:'100灵石' },
-{ name:'筑基丹', color:'azure', desc:'增加筑基成功率两成', grade:'中品', price:'1000灵石' },
-{ name:'金丹丹', color:'gold', desc:'稳固金丹，防止碎裂', grade:'上品', price:'10000灵石' },
-{ name:'元婴丹', color:'spirit', desc:'护持元婴初生', grade:'极品', price:'10万灵石' },
-{ name:'回气丹', color:'jade', desc:'快速恢复灵气', grade:'下品', price:'50灵石' },
-{ name:'疗伤丹', color:'vermilion', desc:'治愈内外伤势', grade:'下品', price:'80灵石' }
-],
-herbs: [
-{ name:'千年人参', color:'spirit', desc:'蕴含庞大生命精华', age:'千年以上' },
-{ name:'灵石', color:'gold', desc:'修真界通用货币', grade:'下中上极品' },
-{ name:'朱果', color:'vermilion', desc:'服之可增加十年修为', age:'三百年成熟' },
-{ name:'玄铁', color:'paper', desc:'炼制法宝上佳材料', grade:'中品灵材' }
-],
-formulas: [
-{ name:'聚气丹方', color:'jade', materials:'灵草×3，聚灵花×1', method:'文火炼制三个时辰' },
-{ name:'筑基丹方', color:'azure', materials:'天灵果×1，筑基草×5', method:'武火炼制七日七夜' }
-]
-};
-
-const healthData = [
-{ title:'子时养阴', icon:'fa-moon', color:'azure', desc:'23:00-1:00入睡滋养肾阴', xuanxue:'子时一阳生，阴极阳生', science:'肝脏排毒关键时期', tips:['睡前热水泡脚','保持卧室安静'] },
-{ title:'卯时采气', icon:'fa-sun', color:'jade', desc:'5:00-7:00采天地阳气', xuanxue:'卯时阳气始生', science:'清晨空气含氧量高', tips:['起床后饮温水','配合吐纳之术'] },
-{ title:'饮食调和', icon:'fa-utensils', color:'gold', desc:'五味入五脏，五色补五行', xuanxue:'五味调和，五脏得养', science:'均衡饮食助营养吸收', tips:['早餐宜温热','晚餐宜清淡'] },
-{ title:'运动炼体', icon:'fa-running', color:'vermilion', desc:'动则生阳，静则生阴', xuanxue:'阳气升发驱除寒湿', science:'增强心肺功能', tips:['运动量循序渐进','持之以恒'] }
-];
-
-const legendData = [
-{ name:'彭祖', icon:'彭', color:'gold', title:'寿八百载', desc:'善养生之术，创导引行气之法', quote:'道不在烦，心无烦，形无极，此可长生' },
-{ name:'张三丰', icon:'丰', color:'spirit', title:'太极宗师', desc:'武当派创始人', quote:'太极者，无极而生，动静之机' },
-{ name:'吕洞宾', icon:'吕', color:'jade', title:'纯阳祖师', desc:'八仙之一', quote:'一粒金丹吞入腹，始知我命不由天' },
-{ name:'老子', icon:'老', color:'azure', title:'道家始祖', desc:'著《道德经》五千言', quote:'道可道，非常道' },
-{ name:'葛洪', icon:'葛', color:'vermilion', title:'抱朴子', desc:'东晋道教学者', quote:'求长生，诀在于志' },
-{ name:'陈抟', icon:'陈', color:'paper', title:'睡仙', desc:'以睡功闻名', quote:'至人之睡，先睡心，后睡眼' }
-];
-
-const wisdomQuestions = [
-{ q:'「道生一，一生二，二生三，三生万物」何解？', opts:['道生万物','数学为本','一气化阴阳生万物'], ans:3 },
-{ q:'「上善若水」何意？', opts:['水最善良','滋养万物而不争','要像水软弱'], ans:2 },
-{ q:'「无为而无不为」何解？', opts:['什么都不做','顺应自然而为','消极等待'], ans:2 },
-{ q:'「道法自然」何为自然？', opts:['山川河流','自然而然','随意而为'], ans:2 },
-{ q:'「金丹大道」何为金丹？', opts:['黄金做的丹','内丹修炼所结','仙丹妙药'], ans:2 },
-{ q:'「炼精化气」此为何功？', opts:['外丹术','内丹术','符箓术'], ans:2 }
-];
-
-// 状态变量
-let currentPage = 'home';
-let meditationTimer = null, meditationSeconds = 0, isMeditating = false;
-let reactionTimer = null, reactionTimes = [];
-let focusTimer = null, focusBest = 0;
-let memorySeq = [], memoryPlayer = [], memoryLevel = 1, memoryBest = 0;
-let wisdomIdx = 0, wisdomCorrect = 0, wisdomTotal = 0;
-
-// 页面切换
-function showPage(pageId) {
-document.querySelectorAll('.page').forEach(p => { p.classList.remove('active'); });
-document.querySelectorAll('.nav-link').forEach(n => { n.classList.remove('active'); });
-document.getElementById('page-' + pageId).classList.add('active');
-document.querySelectorAll('.nav-link').forEach(n => {
-if (n.textContent.includes(getPageName(pageId))) n.classList.add('active');
-});
-currentPage = pageId;
-window.scrollTo(0, 0);
-
-// 初始化页面内容
-if (pageId === 'realm') generateRealmList();
-if (pageId === 'technique') showTechniqueTab('basic');
-if (pageId === 'alchemy') showAlchemyTab('dans');
-if (pageId === 'health') generateHealth();
-if (pageId === 'legend') generateLegend();
-if (pageId === 'practice') { generateTasks(); generateLog(); }
-if (pageId === 'trial') { generateMemory(); loadWisdom(); }
-}
-
-function getPageName(id) {
-const names = {home:'首页',realm:'境界体系',technique:'功法秘籍',alchemy:'丹药宝典',health:'养生之道',legend:'神仙列传',practice:'修行中心',trial:'试炼场'};
-return names[id] || '';
-}
-
-function toggleMobileMenu() {
-const nav = document.getElementById('mobileNav');
-nav.classList.toggle('hidden');
-}
-
-// 弹窗
-function showModal(title, content) {
-document.getElementById('modalContent').innerHTML = `<h3 class="font-brush text-xl text-paper mb-4">${title}</h3>${content}<button class="btn-jade w-full mt-4" onclick="closeModal()">关闭</button>`;
-document.getElementById('modal').classList.add('show');
-}
-
-function closeModal() {
-document.getElementById('modal').classList.remove('show');
-}
-
-// 境界列表
-function generateRealmList() {
-let html = '';
-for (const [k, d] of Object.entries(realmData)) {
-html += `<div class="glass-card p-4 cursor-pointer" onclick="showRealmDetail('${k}')">
-<div class="flex items-center gap-4">
-<div class="w-14 h-14 rounded-full bg-${d.color}/20 flex items-center justify-center border border-${d.color}/30">
-<span class="font-brush text-xl text-${d.color}">${d.icon}</span>
-</div>
-<div class="flex-grow">
-<h3 class="font-brush text-lg text-paper">${d.name}</h3>
-<p class="text-paper/60 text-sm">${d.desc}</p>
-</div>
-<div class="text-right">
-<div class="text-paper/50 text-xs">寿元</div>
-<div class="text-gold font-brush">${d.lifespan}</div>
-</div>
-</div>
-</div>`;
-}
-document.getElementById('realmList').innerHTML = html;
-}
-
-function showRealmDetail(k) {
-const d = realmData[k];
-showModal(d.name, `
-<div class="space-y-3">
-<p class="text-paper/70">${d.desc}</p>
-<div class="p-3 rounded-lg bg-ink/30"><span class="text-gold">寿元：</span>${d.lifespan}</div>
-<div class="p-3 rounded-lg bg-ink/30"><span class="text-gold">下一境界：</span>${d.next}</div>
-<div><span class="text-gold">境界阶段：</span><ul class="mt-2 space-y-1">${d.stages.map(s => `<li class="text-paper/60 text-sm">• ${s}</li>`).join('')}</ul></div>
-<div><span class="text-gold">能力：</span><div class="flex flex-wrap gap-2 mt-2">${d.abilities.map(a => `<span class="px-2 py-1 rounded-full bg-${d.color}/20 text-${d.color} text-xs">${a}</span>`).join('')}</div></div>
-</div>
-`);
-}
-
-function showOrganModal(k) {
-const d = organData[k];
-showModal(d.name + '·' + d.element + '行', `
-<div class="space-y-3">
-<p class="text-paper/70">${d.desc}</p>
-<p class="text-sm"><span class="text-jade">对应境界：</span>${d.realm}</p>
-<p class="text-sm"><span class="text-gold">修炼之法：</span>${d.practice}</p>
-</div>
-`);
-}
-
-function showRealmInfo() { showRealmDetail('lianqi'); }
-
-// 功法
-function showTechniqueTab(tab) {
-document.querySelectorAll('#page-technique button').forEach(b => {
-b.classList.remove('bg-gold/10', 'border-gold/30', 'text-gold');
-b.classList.add('border-paper/20', 'text-paper/60');
-});
-event.target.classList.add('bg-gold/10', 'border-gold/30', 'text-gold');
-event.target.classList.remove('border-paper/20', 'text-paper/60');
-
-const data = techniqueData[tab];
-let html = '<div class="grid md:grid-cols-2 gap-4">' + data.map(t => `
-<div class="glass-card p-4 cursor-pointer" onclick="showTechniqueDetail('${t.name}','${t.icon}','${t.color}','${t.desc}','${t.mantra}')">
-<div class="flex items-center gap-3 mb-2">
-<div class="w-10 h-10 rounded-lg bg-${t.color}/20 flex items-center justify-center">
-<i class="fas ${t.icon} text-${t.color}"></i>
-</div>
-<div>
-<h4 class="font-brush text-paper">${t.name}</h4>
-</div>
-</div>
-<p class="text-paper/60 text-sm">${t.desc}</p>
-</div>
-`).join('') + '</div>';
-document.getElementById('techniqueContent').innerHTML = html;
-}
-
-function showTechniqueDetail(name, icon, color, desc, mantra) {
-showModal(name, `
-<div class="space-y-3">
-<p class="text-paper/70">${desc}</p>
-<div class="p-3 rounded-lg bg-ink/30">
-<h4 class="text-gold text-sm mb-2">功法口诀</h4>
-<p class="text-paper/60">${mantra}</p>
-</div>
-</div>
-`);
-}
-
-// 丹药
-function showAlchemyTab(tab) {
-document.querySelectorAll('#page-alchemy button').forEach(b => {
-b.classList.remove('bg-gold/10', 'border-gold/30', 'text-gold');
-b.classList.add('border-paper/20', 'text-paper/60');
-});
-event.target.classList.add('bg-gold/10', 'border-gold/30', 'text-gold');
-event.target.classList.remove('border-paper/20', 'text-paper/60');
-
-let html = '';
-if (tab === 'dans') {
-html = '<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">' + alchemyData.dans.map(d => `
-<div class="glass-card p-4">
-<div class="flex items-center gap-2 mb-2">
-<i class="fas fa-circle text-${d.color}"></i>
-<h4 class="font-brush text-paper">${d.name}</h4>
-</div>
-<p class="text-paper/60 text-sm mb-2">${d.desc}</p>
-<div class="text-xs text-paper/40">${d.grade} | ${d.price}</div>
-</div>
-`).join('') + '</div>';
-} else if (tab === 'herbs') {
-html = '<div class="grid md:grid-cols-2 gap-4">' + alchemyData.herbs.map(h => `
-<div class="glass-card p-4">
-<h4 class="font-brush text-${h.color}">${h.name}</h4>
-<p class="text-paper/60 text-sm">${h.desc}</p>
-</div>
-`).join('') + '</div>';
-} else {
-html = '<div class="space-y-3">' + alchemyData.formulas.map(f => `
-<div class="glass-card p-4">
-<h4 class="font-brush text-${f.color} mb-2">${f.name}</h4>
-<p class="text-paper/50 text-xs mb-2">材料：${f.materials}</p>
-<p class="text-paper/60 text-sm">${f.method}</p>
-</div>
-`).join('') + '</div>';
-}
-document.getElementById('alchemyContent').innerHTML = html;
-}
-
-// 养生
-function generateHealth() {
-document.getElementById('healthContent').innerHTML = healthData.map(h => `
-<div class="glass-card p-5 mb-4">
-<div class="flex items-start gap-4">
-<div class="w-12 h-12 rounded-full bg-${h.color}/20 flex items-center justify-center flex-shrink-0">
-<i class="fas ${h.icon} text-${h.color}"></i>
-</div>
-<div>
-<h3 class="font-brush text-lg text-paper mb-2">${h.title}</h3>
-<p class="text-paper/60 text-sm mb-3">${h.desc}</p>
-<div class="grid md:grid-cols-2 gap-2 mb-3">
-<div class="p-2 rounded bg-ink/30"><span class="text-jade text-xs">玄学：</span><span class="text-paper/50 text-xs">${h.xuanxue}</span></div>
-<div class="p-2 rounded bg-ink/30"><span class="text-gold text-xs">科学：</span><span class="text-paper/50 text-xs">${h.science}</span></div>
-</div>
-<div class="text-xs text-paper/50">${h.tips.map(t => '•' + t).join(' ')}</div>
-</div>
-</div>
-</div>
-`).join('');
-}
-
-// 神仙列传
-function generateLegend() {
-document.getElementById('legendList').innerHTML = legendData.map(l => `
-<div class="glass-card p-5">
-<div class="flex items-start gap-4">
-<div class="w-12 h-12 rounded-full bg-${l.color}/20 flex items-center justify-center">
-<span class="font-brush text-xl text-${l.color}">${l.icon}</span>
-</div>
-<div>
-<h3 class="font-brush text-lg text-paper">${l.name}</h3>
-<p class="text-${l.color} text-xs mb-2">${l.title}</p>
-<p class="text-paper/60 text-xs mb-2">${l.desc}</p>
-<div class="p-2 rounded bg-ink/30"><span class="text-paper/50 text-xs">「${l.quote}」</span></div>
-</div>
-</div>
-</div>
-`).join('');
-}
-
-// 修行中心
-function generateTasks() {
-const tasks = [{n:'晨间吐纳',d:true},{n:'午时炼气',d:false},{n:'子时冥想',d:false}];
-document.getElementById('dailyTasks').innerHTML = tasks.map(t => `
-<div class="flex justify-between p-2 rounded bg-ink/30 text-xs">
-<span><i class="fas ${t.d?'fa-check-circle text-jade':'fa-circle text-paper/20'} mr-1"></i>${t.n}</span>
-<span class="${t.d?'text-jade':'text-paper/40'}">${t.d?'完成':'待完成'}</span>
-</div>
-`).join('');
-}
-
-function generateLog() {
-const logs = [{t:'今日',c:'完成吐纳'},{t:'昨日',c:'修炼引气诀'}];
-document.getElementById('practiceLog').innerHTML = logs.map(l => `
-<div class="text-xs p-2 rounded bg-ink/20">
-<div class="text-paper/70">${l.c}</div>
-<div class="text-paper/30">${l.t}</div>
-</div>
-`).join('');
-}
-
-// 冥想
-function startMeditation() {
-if (isMeditating) return;
-isMeditating = true;
-meditationSeconds = 0;
-document.getElementById('meditationStatus').textContent = '冥想中...';
-document.getElementById('meditationStatus').className = 'text-gold text-xs';
-document.getElementById('startMeditation').disabled = true;
-document.getElementById('stopMeditation').disabled = false;
-document.getElementById('stopMeditation').classList.remove('opacity-50');
-meditationTimer = setInterval(() => {
-meditationSeconds++;
-const h = Math.floor(meditationSeconds/3600), m = Math.floor((meditationSeconds%3600)/60), s = meditationSeconds%60;
-document.getElementById('meditationTimer').textContent = 
-String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-}, 1000);
-}
-
-function stopMeditation() {
-if (!isMeditating) return;
-isMeditating = false;
-clearInterval(meditationTimer);
-document.getElementById('meditationStatus').textContent = '待机中';
-document.getElementById('meditationStatus').className = 'text-jade text-xs';
-document.getElementById('startMeditation').disabled = false;
-document.getElementById('stopMeditation').disabled = true;
-document.getElementById('stopMeditation').classList.add('opacity-50');
-
-const mins = Math.floor(meditationSeconds/60);
-const cur = parseInt(document.getElementById('progressText').textContent);
-const nxt = Math.min(cur + mins, 100);
-document.getElementById('progressText').textContent = nxt + '%';
-document.getElementById('progressBar').style.width = nxt + '%';
-if (nxt >= 100) {
-document.getElementById('breakthroughs').textContent = parseInt(document.getElementById('breakthroughs').textContent) + 1;
-document.getElementById('progressText').textContent = '0%';
-document.getElementById('progressBar').style.width = '0%';
-}
-}
-
-// 灵根测试
-function startRootTest() {
-showModal('灵根测试', `
-<div class="space-y-4">
-<p class="text-paper/60 text-sm">选择与你最契合的元素</p>
-<div class="grid grid-cols-2 gap-3">
-<button onclick="showRootResult('jade','木灵根','木主生发，修行木系功法事半功倍')" class="p-4 rounded-xl border border-jade/30 hover:bg-jade/10"><i class="fas fa-leaf text-jade text-xl"></i><div class="text-paper">木</div></button>
-<button onclick="showRootResult('vermilion','火灵根','火主炽热，修行火系功法事半功倍')" class="p-4 rounded-xl border border-vermilion/30 hover:bg-vermilion/10"><i class="fas fa-fire text-vermilion text-xl"></i><div class="text-paper">火</div></button>
-<button onclick="showRootResult('paper','金灵根','金主锋锐，修行金系功法事半功倍')" class="p-4 rounded-xl border border-paper/30 hover:bg-paper/10"><i class="fas fa-gem text-paper/80 text-xl"></i><div class="text-paper">金</div></button>
-<button onclick="showRootResult('spirit','水灵根','水主柔韧，修行水系功法事半功倍')" class="p-4 rounded-xl border border-spirit/30 hover:bg-spirit/10"><i class="fas fa-water text-spirit text-xl"></i><div class="text-paper">水</div></button>
-<button onclick="showRootResult('gold','土灵根','土主厚重，修行土系功法事半功倍')" class="p-4 rounded-xl border border-gold/30 hover:bg-gold/10"><i class="fas fa-mountain text-gold text-xl"></i><div class="text-paper">土</div></button>
-<button onclick="showRootResult('azure','五行灵根','五行均衡，修行任何功法皆可')" class="p-4 rounded-xl border border-azure/30 hover:bg-azure/10"><i class="fas fa-yin-yang text-azure text-xl"></i><div class="text-paper">五行</div></button>
-</div>
-</div>
-`);
-}
-
-function showRootResult(color, name, desc) {
-showModal('测试结果', `
-<div class="text-center">
-<div class="w-16 h-16 mx-auto rounded-full bg-${color}/20 flex items-center justify-center mb-4">
-<i class="fas fa-yin-yang text-${color} text-2xl"></i>
-</div>
-<h3 class="font-brush text-xl text-paper mb-2">${name}</h3>
-<p class="text-paper/60">${desc}</p>
-</div>
-`);
-}
-
-// 反应测试
-function startReactionGame() {
-reactionTimes = [];
-document.getElementById('reactionStatus').textContent = '等待灵光出现...';
-document.getElementById('startReaction').disabled = true;
-document.getElementById('stopReaction').disabled = false;
-document.getElementById('stopReaction').classList.remove('opacity-50');
-
-const delay = 2000 + Math.random() * 3000;
-reactionTimer = setTimeout(() => {
-document.getElementById('reactionStatus').textContent = '点击灵光！';
-const t = document.getElementById('reactionTarget');
-t.style.display = 'block';
-t.style.left = (Math.random() * 180 + 20) + 'px';
-t.style.top = (Math.random() * 120 + 20) + 'px';
-t.onclick = hitReaction;
-}, delay);
-}
-
-function hitReaction() {
-reactionTimes.push(Date.now());
-const t = document.getElementById('reactionTarget');
-t.style.display = 'none';
-document.getElementById('reactionCount').textContent = reactionTimes.length;
-const avg = reactionTimes.length > 1 ? Math.round(reactionTimes.reduce((a,b)=>a+b,0)/reactionTimes.length) : reactionTimes[0];
-document.getElementById('avgReaction').textContent = avg + 'ms';
-
-if (reactionTimes.length < 5) {
-document.getElementById('reactionStatus').textContent = '继续等待...';
-setTimeout(() => {
-document.getElementById('reactionStatus').textContent = '点击灵光！';
-const t = document.getElementById('reactionTarget');
-t.style.display = 'block';
-t.style.left = (Math.random() * 180 + 20) + 'px';
-t.style.top = (Math.random() * 120 + 20) + 'px';
-t.onclick = hitReaction;
-}, 1500 + Math.random() * 2000);
-} else {
-document.getElementById('reactionStatus').textContent = '测试完成！';
-document.getElementById('reactionRank').textContent = avg < 300 ? '天神' : avg < 500 ? '金丹' : '凡人';
-endReaction();
-}
-}
-
-function stopReactionGame() { clearTimeout(reactionTimer); endReaction(); }
-
-function endReaction() {
-document.getElementById('startReaction').disabled = false;
-document.getElementById('stopReaction').disabled = true;
-document.getElementById('stopReaction').classList.add('opacity-50');
-document.getElementById('reactionTarget').style.display = 'none';
-}
-
-// 定力测试
-function startFocusGame() {
-let sec = 0;
-document.getElementById('startFocus').disabled = true;
-document.getElementById('stopFocus').disabled = false;
-document.getElementById('stopFocus').classList.remove('opacity-50');
-document.getElementById('focusDistractions').innerHTML = '';
-
-focusTimer = setInterval(() => {
-sec++;
-document.getElementById('focusTime').textContent = sec + '秒';
-if (sec > focusBest) {
-focusBest = sec;
-document.getElementById('focusBest').textContent = sec + '秒';
-}
-document.getElementById('focusRank').textContent = sec >= 60 ? '天神' : sec >= 30 ? '金丹' : '凡人';
-
-if (sec % 2 === 0) {
-const d = document.createElement('div');
-d.className = 'absolute text-paper/20 text-xs';
-d.textContent = ['心魔','杂念'][Math.floor(Math.random()*2)];
-d.style.left = Math.random()*100+'%';
-d.style.top = Math.random()*100+'%';
-document.getElementById('focusDistractions').appendChild(d);
-setTimeout(() => d.remove(), 1500);
-}
-}, 1000);
-
-document.getElementById('focusGame').onclick = () => stopFocusGame();
-}
-
-function stopFocusGame() {
-clearInterval(focusTimer);
-document.getElementById('startFocus').disabled = false;
-document.getElementById('stopFocus').disabled = true;
-document.getElementById('stopFocus').classList.add('opacity-50');
-document.getElementById('focusDistractions').innerHTML = '';
-}
-
-// 记忆测试
-function generateMemory() {
-let html = '';
-for (let i = 0; i < 16; i++) {
-html += `<div class="aspect-square rounded-lg bg-ink/40 border border-paper/10 flex items-center justify-center text-transparent" data-idx="${i}" onclick="hitMemory(${i})"><i class="fas fa-question"></i></div>`;
-}
-document.getElementById('memoryGame').innerHTML = html;
-}
-
-function startMemoryGame() {
-memorySeq = [];
-memoryPlayer = [];
-memoryLevel = 1;
-document.getElementById('memoryLevel').textContent = 1;
-document.getElementById('startMemory').disabled = true;
-document.getElementById('stopMemory').disabled = false;
-document.getElementById('stopMemory').classList.remove('opacity-50');
-nextMemoryRound();
-}
-
-function nextMemoryRound() {
-memoryPlayer = [];
-memorySeq.push(Math.floor(Math.random() * 16));
-document.getElementById('memoryLevel').textContent = memoryLevel;
-document.getElementById('memoryRank').textContent = memoryLevel >= 5 ? '天神' : memoryLevel >= 3 ? '金丹' : '凡人';
-
-let i = 0;
-const flash = setInterval(() => {
-if (i >= memorySeq.length) {
-clearInterval(flash);
-enableMemory();
-return;
-}
-const c = document.querySelector(`[data-idx="${memorySeq[i]}"]`);
-c.classList.add('bg-gold/20', 'text-gold');
-c.innerHTML = '<i class="fas fa-yin-yang"></i>';
-setTimeout(() => {
-c.classList.remove('bg-gold/20', 'text-gold');
-c.innerHTML = '<i class="fas fa-question"></i>';
-c.classList.add('text-transparent');
-}, 400);
-i++;
-}, 600);
-}
-
-function enableMemory() {
-document.querySelectorAll('[data-idx]').forEach(c => {
-c.onclick = function() {
-const idx = parseInt(this.dataset.idx);
-memoryPlayer.push(idx);
-this.classList.add('bg-gold/20', 'text-gold');
-this.innerHTML = '<i class="fas fa-yin-yang"></i>';
-setTimeout(() => {
-this.classList.remove('bg-gold/20', 'text-gold');
-this.innerHTML = '<i class="fas fa-question"></i>';
-this.classList.add('text-transparent');
-}, 200);
-
-if (memoryPlayer[memoryPlayer.length-1] !== memorySeq[memoryPlayer.length-1]) {
-stopMemoryGame();
-showModal('失败', `<p class="text-center text-paper/70">记忆阵法破解失败！关卡：${memoryLevel}</p>`);
-return;
-}
-if (memoryPlayer.length === memorySeq.length) {
-memoryLevel++;
-if (memoryLevel > memoryBest) {
-memoryBest = memoryLevel - 1;
-document.getElementById('memoryBest').textContent = memoryBest;
-}
-setTimeout(nextMemoryRound, 800);
-}
-};
-});
-}
-
-function stopMemoryGame() {
-document.getElementById('startMemory').disabled = false;
-document.getElementById('stopMemory').disabled = true;
-document.getElementById('stopMemory').classList.add('opacity-50');
-generateMemory();
-}
-
-// 悟性测试
-function loadWisdom() {
-const q = wisdomQuestions[wisdomIdx];
-document.getElementById('wisdomQuestion').textContent = q.q;
-document.getElementById('wisdomOptions').innerHTML = q.opts.map((o, i) => `
-<button onclick="checkWisdom(${i+1})" class="w-full p-3 text-left rounded-lg bg-ink/30 hover:bg-gold/10 text-paper/70 text-sm border border-transparent hover:border-gold/20">${String.fromCharCode(65+i)}. ${o}</button>
-`).join('');
-}
-
-function checkWisdom(ans) {
-const q = wisdomQuestions[wisdomIdx];
-wisdomTotal++;
-if (ans === q.ans) wisdomCorrect++;
-document.getElementById('wisdomCount').textContent = wisdomTotal;
-document.getElementById('wisdomCorrect').textContent = Math.round(wisdomCorrect/wisdomTotal*100) + '%';
-document.getElementById('wisdomRank').textContent = wisdomCorrect/wisdomTotal >= 0.8 ? '天神' : wisdomCorrect/wisdomTotal >= 0.6 ? '金丹' : '凡人';
-wisdomIdx = (wisdomIdx + 1) % wisdomQuestions.length;
-loadWisdom();
-}
-
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
-showPage('home');
-});
-</script>
 </body>
 </html>
