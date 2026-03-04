@@ -1,0 +1,27 @@
+{
+  "name": "xiuxian",
+  "version": "1.0.0",
+  "description": "太虚仙门 · 问道长生 - 一个融合经典仙侠与玄幻元素的完整修仙世界观设定与互动体验平台",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -c-1",
+    "build": "npm run minify-js && npm run minify-css",
+    "minify-js": "npx uglify-js src/app.js src/modules/*.js src/utils/*.js -o dist/app.min.js",
+    "minify-css": "npx clean-css-cli index.html -o dist/index.min.html",
+    "deploy": "npm run build && cp -r dist/* site/"
+  },
+  "keywords": [
+    "xiuxian",
+    "cultivation",
+    "xianxia",
+    "fantasy",
+    "webapp"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "uglify-js": "^3.17.4",
+    "clean-css-cli": "^5.6.2"
+  }
+}

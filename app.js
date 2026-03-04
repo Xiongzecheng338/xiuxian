@@ -167,7 +167,14 @@ const elements = {
   progressText: document.getElementById('progressText'),
   progressBar: document.getElementById('progressBar'),
   breakthroughs: document.getElementById('breakthroughs'),
-  pigContent: document.getElementById('pigContent')
+  pigContent: document.getElementById('pigContent'),
+  // 修炼数据统计面板元素
+  statRealm: document.getElementById('statRealm'),
+  statRealmLevel: document.getElementById('statRealmLevel'),
+  statCultivation: document.getElementById('statCultivation'),
+  statCultivationBar: document.getElementById('statCultivationBar'),
+  statChapters: document.getElementById('statChapters'),
+  statSect: document.getElementById('statSect')
 };
 
 // 缓存页面元素，避免重复查询DOM
@@ -259,6 +266,15 @@ function showPage(pageId) {
       case 'trial':
         generateMemory();
         loadWisdom();
+        break;
+      case 'news':
+        generateNews();
+        break;
+      case 'community':
+        generateCommunity();
+        break;
+      case 'tools':
+        generateTools();
         break;
       case 'pig':
         showPigTab('history');
@@ -1099,7 +1115,8 @@ let userData = {
   breakthroughs: 0, // 突破次数
   sect: null, // 门派
   artifacts: [], // 法宝
-  adventures: [] // 奇遇记录
+  adventures: [], // 奇遇记录
+  chaptersRead: 0 // 已阅读章节数
 };
 
 // 门派数据
@@ -1118,6 +1135,20 @@ const adventureData = [
   { id: 4, name: '秘境探索', desc: '进入一处秘境，发现大量猪蹄资源', reward: '资源+500' }
 ];
 
+// 修真语录数据
+const quotesData = [
+  { text: '道可道，非常道；名可名，非常名。', source: '《道德经》' },
+  { text: '夫求长生，修至道，诀在于志，不在于富贵名利。', source: '抱朴子' },
+  { text: '太极者，无极而生，动静之机。', source: '张三丰' },
+  { text: '一粒金丹吞入腹，始知我命不由天。', source: '吕洞宾' },
+  { text: '道不在烦，心无烦，形无极，此可长生。', source: '彭祖' },
+  { text: '至人之睡，先睡心，后睡眼。', source: '陈抟' },
+  { text: '上善若水，水善利万物而不争。', source: '《道德经》' },
+  { text: '无为而无不为。', source: '《道德经》' },
+  { text: '道法自然。', source: '《道德经》' },
+  { text: '道生一，一生二，二生三，三生万物。', source: '《道德经》' }
+];
+
 // 初始化用户数据
 function initUserData() {
   // 从本地存储加载用户数据
@@ -1134,7 +1165,8 @@ function initUserData() {
         breakthroughs: 0,
         sect: null,
         artifacts: [],
-        adventures: []
+        adventures: [],
+        chaptersRead: 0
       };
       saveUserData();
     }
@@ -1148,52 +1180,43 @@ function initUserData() {
       breakthroughs: 0,
       sect: null,
       artifacts: [],
-      adventures: []
+      adventures: [],
+      chaptersRead: 0
     };
   }
-  
-  // 更新UI显示
-  updateUserUI();
+  // 更新修炼数据统计面板
+  updateStatPanel();
 }
 
-// 保存用户数据
+// 保存用户数据到本地存储
 function saveUserData() {
   try {
-    // 节流保存，避免频繁写入
-    if (!saveUserData.throttle) {
-      saveUserData.throttle = true;
-      setTimeout(() => {
-        localStorage.setItem('xiuxianUserData', JSON.stringify(userData));
-        saveUserData.throttle = false;
-      }, 500);
-    }
+    localStorage.setItem('xiuxianUserData', JSON.stringify(userData));
   } catch (error) {
     console.error('Failed to save user data:', error);
   }
 }
 
-// 更新用户UI
-function updateUserUI() {
-  // 只在页面加载时更新，避免频繁DOM操作
-  if (document.getElementById('realmIcon')) {
-    // 更新境界信息
-    const realm = realmData[userData.realm];
-    if (realm) {
-      document.getElementById('realmIcon').textContent = realm.icon;
-      document.querySelector('#page-practice h4').innerHTML = `${realm.name} <span class="text-jade text-xs px-2 py-1 rounded-full bg-jade/10">初期</span>`;
-      document.querySelector('#page-practice h4 + p').textContent = realm.desc;
-    }
-    
-    // 更新修炼进度
-    const progress = Math.min(100, Math.floor((userData.cultivation / 1000) * 100));
-    document.getElementById('progressText').textContent = progress + '%';
-    document.getElementById('progressBar').style.width = progress + '%';
-    
-    // 更新修炼时长
-    document.getElementById('practiceHours').textContent = userData.practiceHours;
-    
-    // 更新突破次数
-    document.getElementById('breakthroughs').textContent = userData.breakthroughs;
+// 更新修炼数据统计面板
+function updateStatPanel() {
+  const realm = realmData[userData.realm];
+  if (realm) {
+    elements.statRealm.textContent = realm.name;
+    elements.statRealmLevel.textContent = realm.stages[0];
+  }
+  
+  // 计算修为进度
+  const maxCultivation = 1000; // 假设每个境界需要1000修为
+  const progress = Math.min((userData.cultivation / maxCultivation) * 100, 100);
+  elements.statCultivation.textContent = `${userData.cultivation}/${maxCultivation}`;
+  elements.statCultivationBar.style.width = `${progress}%`;
+  
+  elements.statChapters.textContent = userData.chaptersRead;
+  
+  if (userData.sect && sectData[userData.sect]) {
+    elements.statSect.textContent = sectData[userData.sect].name;
+  } else {
+    elements.statSect.textContent = '未加入';
   }
 }
 
@@ -1201,16 +1224,42 @@ function updateUserUI() {
 function chooseSect(sectId) {
   userData.sect = sectId;
   saveUserData();
+  updateStatPanel();
   showModal('门派选择', `
     <div class="text-center">
-      <h3 class="font-brush text-xl text-gold mb-2">${sectData[sectId].name}</h3>
+      <h4 class="font-brush text-lg text-gold mb-2">${sectData[sectId].name}</h4>
       <p class="text-paper/60 mb-3">${sectData[sectId].desc}</p>
-      <p class="text-gold">${sectData[sectId].bonus}</p>
+      <p class="text-jade">${sectData[sectId].bonus}</p>
     </div>
   `);
 }
 
-// 触发奇遇
+// 增加修为值
+function addCultivation(amount) {
+  userData.cultivation += amount;
+  saveUserData();
+  updateStatPanel();
+}
+
+// 增加已阅读章节数
+function addChapterRead() {
+  userData.chaptersRead++;
+  saveUserData();
+  updateStatPanel();
+}
+
+// 每日签道功能
+function dailyQuote() {
+  const randomQuote = quotesData[Math.floor(Math.random() * quotesData.length)];
+  showModal('每日签道', `
+    <div class="text-center">
+      <p class="text-paper/80 mb-4 text-lg">"${randomQuote.text}"</p>
+      <p class="text-gold">${randomQuote.source}</p>
+    </div>
+  `);
+}
+
+// 奇遇卡片功能
 function triggerAdventure() {
   const randomAdventure = adventureData[Math.floor(Math.random() * adventureData.length)];
   userData.adventures.push(randomAdventure);
@@ -1222,7 +1271,15 @@ function triggerAdventure() {
       <p class="text-gold">奖励：${randomAdventure.reward}</p>
     </div>
   `);
+  // 增加修为值
+  if (randomAdventure.reward.includes('修为+')) {
+    const amount = parseInt(randomAdventure.reward.replace('修为+', ''));
+    addCultivation(amount);
+  }
 }
+
+// 初始化应用
+initApp();
 
 // 开始修炼
 function startMeditation() {
@@ -1268,37 +1325,58 @@ function stopMeditation() {
 
   const mins = Math.floor(meditationSeconds/60);
   userData.practiceHours += Math.floor(mins / 60);
-  userData.cultivation += mins * 10;
+  const cultivationGain = mins * 10;
+  userData.cultivation += cultivationGain;
   
   // 检查是否突破境界
-  checkBreakthrough();
+  const breakthrough = checkBreakthrough();
   
   saveUserData();
-  updateUserUI();
-}
-
-// 检查突破境界
-function checkBreakthrough() {
-  const realmKeys = Object.keys(realmData);
-  const currentIndex = realmKeys.indexOf(userData.realm);
+  updateStatPanel();
   
-  if (currentIndex < realmKeys.length - 1 && userData.cultivation >= 1000) {
-    const nextRealm = realmKeys[currentIndex + 1];
-    userData.realm = nextRealm;
-    userData.cultivation = 0;
-    userData.breakthroughs++;
-    
-    // 显示突破特效
-    showBreakthroughEffect();
-    
-    // 随机触发奇遇
-    if (Math.random() > 0.5) {
-      setTimeout(triggerAdventure, 2000);
-    }
+  // 显示修炼结果
+  if (breakthrough) {
+    showModal('修炼突破', `
+      <div class="text-center">
+        <h3 class="font-brush text-xl text-gold mb-2">突破成功！</h3>
+        <p class="text-paper/60 mb-3">恭喜你突破到${realmData[userData.realm].name}！</p>
+        <p class="text-jade">获得修为：+${cultivationGain}</p>
+      </div>
+    `);
+  } else if (mins > 0) {
+    showModal('修炼完成', `
+      <div class="text-center">
+        <h3 class="font-brush text-xl text-gold mb-2">修炼完成</h3>
+        <p class="text-paper/60 mb-3">你打坐了${mins}分钟</p>
+        <p class="text-jade">获得修为：+${cultivationGain}</p>
+      </div>
+    `);
   }
 }
 
-// 显示突破特效
+// 检查境界突破
+function checkBreakthrough() {
+  const currentRealm = realmData[userData.realm];
+  const maxCultivation = 1000; // 每个境界需要1000修为
+  
+  if (userData.cultivation >= maxCultivation) {
+    // 寻找下一个境界
+    const realmKeys = Object.keys(realmData);
+    const currentIndex = realmKeys.indexOf(userData.realm);
+    
+    if (currentIndex < realmKeys.length - 1) {
+      userData.realm = realmKeys[currentIndex + 1];
+      userData.cultivation -= maxCultivation;
+      userData.breakthroughs++;
+      // 随机触发奇遇
+      if (Math.random() > 0.5) {
+        setTimeout(triggerAdventure, 2000);
+      }
+      return true;
+    }
+  }
+  return false;
+}
 function showBreakthroughEffect() {
   const effect = document.createElement('div');
   effect.style.position = 'fixed';
@@ -1538,6 +1616,170 @@ function showCreateHeritageForm() {
         <textarea id="heritageDesc" class="w-full p-2 rounded-lg bg-ink/30 border border-paper/20 text-paper" rows="3" placeholder="输入传承描述"></textarea>
       </div>
       <button class="btn-gold w-full" onclick="createHeritage(document.getElementById('heritageName').value, document.getElementById('heritageDesc').value)">创建传承</button>
+    </div>
+  `);
+}
+
+// 显示世界观信息
+function showWorldviewInfo() {
+  showModal('世界观简介', `
+    <div class="space-y-4">
+      <div class="p-4 rounded-lg bg-ink/30">
+        <h4 class="font-brush text-gold mb-2">核心架构</h4>
+        <p class="text-paper/70 text-sm">本修仙世界设定融合了经典仙侠与玄幻元素，构建了一个完整的世界观体系。从现代末法时代，到先秦炼器时代的鼎盛，再到未来灵气复苏，展现了修仙文明的兴衰与传承。</p>
+      </div>
+      <div class="p-4 rounded-lg bg-ink/30">
+        <h4 class="font-brush text-gold mb-2">科学与修仙融合</h4>
+        <p class="text-paper/70 text-sm">通过科学与修仙理论的融合，为修仙现象提供了合理的解释，包括视觉隐藏现象的阵法原理、长距离飞行能力的科学依据、空间压缩技术的实现方式等。</p>
+      </div>
+      <div class="p-4 rounded-lg bg-ink/30">
+        <h4 class="font-brush text-gold mb-2">历史与现代融合</h4>
+        <p class="text-paper/70 text-sm">将历史人物重新诠释为修仙者，将现代社会现象解释为修仙影响，构建了一个全新的认知框架，使修仙世界与现实世界紧密相连。</p>
+      </div>
+      <div class="p-4 rounded-lg bg-ink/30">
+        <h4 class="font-brush text-gold mb-2">未来发展</h4>
+        <p class="text-paper/70 text-sm">随着灵气复苏，修仙文明与科技文明将逐渐融合，形成新的文明形态，人类将探索宇宙，寻找新的修仙资源，追求更高层次的存在。</p>
+      </div>
+    </div>
+  `);
+}
+
+// 修仙资讯数据
+const newsData = [
+  { title: '灵气复苏速度加快，多地出现灵脉觉醒现象', content: '据修仙界最新消息，灵气复苏速度近期明显加快，全国各地陆续出现灵脉觉醒现象。专家预测，未来五年内，修仙者数量将大幅增加。', date: '2026-03-01' },
+  { title: '首个元婴期修士现世，打破末法时代记录', content: '近日，一位修炼者成功突破元婴期，成为末法时代以来首位达到此境界的修士。这一突破标志着修仙文明正式进入复苏阶段。', date: '2026-02-28' },
+  { title: '科学家发现灵气与量子场的关联', content: '国际科研团队通过实验发现，灵气波动与量子场变化存在密切关联，这一发现为科学解释修仙现象提供了新的思路。', date: '2026-02-25' },
+  { title: '修仙界成立国际联盟，促进全球修仙者交流', content: '来自全球各地的修仙组织共同成立国际修仙联盟，旨在促进修仙者之间的交流与合作，推动修仙文明的发展。', date: '2026-02-20' },
+  { title: '古老秘境重现人间，吸引众多修仙者探索', content: '一处古老的修仙秘境在昆仑山附近重现人间，内部蕴含丰富的修炼资源，吸引了大量修仙者前往探索。', date: '2026-02-15' }
+];
+
+// 生成修仙资讯
+function generateNews() {
+  const newsList = document.getElementById('newsList');
+  let html = '';
+  newsData.forEach(news => {
+    html += `
+      <div class="glass-card p-5">
+        <div class="flex justify-between items-start mb-3">
+          <h3 class="font-brush text-lg text-paper">${news.title}</h3>
+          <span class="text-paper/40 text-xs">${news.date}</span>
+        </div>
+        <p class="text-paper/60 text-sm">${news.content}</p>
+        <div class="mt-3 flex justify-end">
+          <button class="btn-jade text-sm" onclick="showNewsDetail('${news.title}')">
+            <i class="fas fa-arrow-right mr-1"></i>阅读更多
+          </button>
+        </div>
+      </div>
+    `;
+  });
+  newsList.innerHTML = html;
+}
+
+// 显示资讯详情
+function showNewsDetail(title) {
+  const news = newsData.find(n => n.title === title);
+  if (news) {
+    showModal(news.title, `
+      <div class="space-y-3">
+        <p class="text-paper/40 text-xs">发布日期：${news.date}</p>
+        <p class="text-paper/70">${news.content}</p>
+        <div class="p-3 rounded-lg bg-ink/30">
+          <h4 class="text-gold text-sm mb-2">相关推荐</h4>
+          <p class="text-paper/50 text-xs">更多修仙资讯将持续更新，敬请关注。</p>
+        </div>
+      </div>
+    `);
+  }
+}
+
+// 修仙社区数据
+const communityData = [
+  { id: 1, username: '青城子', avatar: '青', level: '金丹期', content: '分享一下我的修炼心得：每日寅时吐纳，吸收天地之灵气，效果显著。', likes: 128, comments: 32, date: '2026-03-01' },
+  { id: 2, username: '紫霞仙子', avatar: '紫', level: '元婴期', content: '最近发现一处灵脉，灵气浓度很高，适合修炼。坐标：昆仑山南麓。', likes: 256, comments: 48, date: '2026-02-28' },
+  { id: 3, username: '玄武真人', avatar: '玄', level: '化神期', content: '突破化神期的关键在于道心稳固，不为外物所动。', likes: 512, comments: 64, date: '2026-02-25' },
+  { id: 4, username: '赤练仙子', avatar: '赤', level: '金丹期', content: '分享一个聚气丹的炼制方法，成功率很高。', likes: 192, comments: 24, date: '2026-02-20' }
+];
+
+// 生成修仙社区
+function generateCommunity() {
+  const communityContent = document.getElementById('communityContent');
+  let html = '';
+  communityData.forEach(post => {
+    html += `
+      <div class="glass-card p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center border border-gold/30">
+            <span class="font-brush text-gold">${post.avatar}</span>
+          </div>
+          <div>
+            <h4 class="font-brush text-paper">${post.username}</h4>
+            <p class="text-jade text-xs">${post.level}</p>
+          </div>
+          <div class="ml-auto text-paper/40 text-xs">${post.date}</div>
+        </div>
+        <p class="text-paper/70 text-sm mb-3">${post.content}</p>
+        <div class="flex gap-4">
+          <button class="flex items-center gap-1 text-paper/40 text-xs hover:text-gold transition-colors">
+            <i class="fas fa-heart"></i> ${post.likes}
+          </button>
+          <button class="flex items-center gap-1 text-paper/40 text-xs hover:text-gold transition-colors">
+            <i class="fas fa-comment"></i> ${post.comments}
+          </button>
+          <button class="flex items-center gap-1 text-paper/40 text-xs hover:text-gold transition-colors">
+            <i class="fas fa-share"></i> 分享
+          </button>
+        </div>
+      </div>
+    `;
+  });
+  communityContent.innerHTML = html;
+}
+
+// 修仙工具数据
+const toolsData = [
+  { name: '灵根测试工具', desc: '测试你的灵根资质，为修炼提供指导', icon: 'fa-search', color: 'jade' },
+  { name: '修为计算器', desc: '计算你的修为进度，预测突破时间', icon: 'fa-calculator', color: 'gold' },
+  { name: '丹药配方查询', desc: '查询各种丹药的配方和炼制方法', icon: 'fa-mortar-pestle', color: 'vermilion' },
+  { name: '功法匹配系统', desc: '根据你的灵根推荐适合的功法', icon: 'fa-book', color: 'azure' },
+  { name: '秘境探索地图', desc: '查看各地秘境的位置和进入条件', icon: 'fa-map', color: 'spirit' },
+  { name: '修仙日历', desc: '查看每日修炼宜忌和运势', icon: 'fa-calendar', color: 'bronze' }
+];
+
+// 生成修仙工具
+function generateTools() {
+  const toolsList = document.getElementById('toolsList');
+  let html = '';
+  toolsData.forEach(tool => {
+    html += `
+      <div class="glass-card p-4 cursor-pointer hover:border-gold/40 transition-all duration-300">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-12 h-12 rounded-full bg-${tool.color}/20 flex items-center justify-center">
+            <i class="fas ${tool.icon} text-${tool.color}"></i>
+          </div>
+          <h4 class="font-brush text-paper">${tool.name}</h4>
+        </div>
+        <p class="text-paper/60 text-sm">${tool.desc}</p>
+        <div class="mt-3">
+          <button class="btn-jade text-sm w-full" onclick="useTool('${tool.name}')">
+            <i class="fas fa-play mr-1"></i>使用工具
+          </button>
+        </div>
+      </div>
+    `;
+  });
+  toolsList.innerHTML = html;
+}
+
+// 使用工具
+function useTool(toolName) {
+  showModal(toolName, `
+    <div class="text-center py-6">
+      <div class="w-16 h-16 mx-auto rounded-full bg-gold/20 flex items-center justify-center mb-4">
+        <i class="fas fa-tools text-gold text-2xl"></i>
+      </div>
+      <p class="text-paper/70 mb-4">${toolName}功能正在开发中，敬请期待！</p>
+      <p class="text-paper/40 text-xs">该工具将在未来版本中上线</p>
     </div>
   `);
 }

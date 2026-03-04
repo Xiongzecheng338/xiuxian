@@ -29,7 +29,54 @@ tailwind.config = {
         crimson: '#dc143c',
         obsidian: '#1a1a2e',
         bronze: '#cd7f32',
-      }
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'glow': 'glow 2s ease-in-out infinite',
+        'qi-flow': 'qiFlow 3s linear infinite',
+        'twinkle': 'twinkle 4s ease-in-out infinite',
+        'ink-spread': 'inkSpread 0.6s ease-out forwards',
+        'scroll-in': 'scrollIn 0.8s ease-out',
+        'fade-in': 'fadeIn 0.6s ease-out',
+        'cloud-float': 'cloudFloat 10s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        qiFlow: {
+          '0%': { transform: 'translateX(-100%) translateY(-100%) rotate(45deg)' },
+          '100%': { transform: 'translateX(100%) translateY(100%) rotate(45deg)' },
+        },
+        twinkle: {
+          '0%, 100%': { opacity: 0.5 },
+          '50%': { opacity: 1 },
+        },
+        inkSpread: {
+          '0%': { transform: 'scale(0)', opacity: 0.8 },
+          '100%': { transform: 'scale(1)', opacity: 0 },
+        },
+        scrollIn: {
+          '0%': { opacity: 0, transform: 'translateY(50px) scale(0.95)' },
+          '100%': { opacity: 1, transform: 'translateY(0) scale(1)' },
+        },
+        fadeIn: {
+          '0%': { opacity: 0, transform: 'translateY(20px)' },
+          '100%': { opacity: 1, transform: 'translateY(0)' },
+        },
+        cloudFloat: {
+          '0%, 100%': { transform: 'translateX(0) translateY(0)' },
+          '25%': { transform: 'translateX(10px) translateY(-5px)' },
+          '50%': { transform: 'translateX(0) translateY(-10px)' },
+          '75%': { transform: 'translateX(-10px) translateY(-5px)' },
+        },
+        glow: {
+          '0%, 100%': { boxShadow: '0 0 10px rgba(212, 168, 83, 0.5)' },
+          '50%': { boxShadow: '0 0 20px rgba(212, 168, 83, 0.8), 0 0 30px rgba(212, 168, 83, 0.4)' },
+        },
+      },
     }
   }
 }
@@ -123,54 +170,6 @@ animation: twinkle 4s ease-in-out infinite;
 will-change: opacity;
 }
 
-@keyframes twinkle {
-0%, 100% { opacity: 0.5; }
-50% { opacity: 1; }
-}
-
-/* 动画 */
-@keyframes fadeIn {
-from { opacity: 0; transform: translateY(20px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse {
-0%, 100% { opacity: 0.8; }
-50% { opacity: 1; }
-}
-
-@keyframes rotate {
-from { transform: rotate(0deg); }
-to { transform: rotate(360deg); }
-}
-
-@keyframes scrollIn {
-from { opacity: 0; transform: translateY(50px) scale(0.95); }
-to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes cloudFloat {
-0%, 100% { transform: translateX(0) translateY(0); }
-25% { transform: translateX(10px) translateY(-5px); }
-50% { transform: translateX(0) translateY(-10px); }
-75% { transform: translateX(-10px) translateY(-5px); }
-}
-
-@keyframes inkSpread {
-0% { transform: scale(0); opacity: 0.8; }
-100% { transform: scale(1); opacity: 0; }
-}
-
-@keyframes glow {
-0%, 100% { box-shadow: 0 0 10px rgba(212, 168, 83, 0.5); }
-50% { box-shadow: 0 0 20px rgba(212, 168, 83, 0.8), 0 0 30px rgba(212, 168, 83, 0.4); }
-}
-
-.animate-fade { animation: fadeIn 0.6s ease-out; will-change: opacity, transform; }
-.animate-scroll { animation: scrollIn 0.8s ease-out; will-change: opacity, transform; }
-.animate-cloud { animation: cloudFloat 10s ease-in-out infinite; will-change: transform; }
-.animate-glow { animation: glow 2s ease-in-out infinite; will-change: box-shadow; }
-
 /* 灵气流动效果 */
 .qi-flow {
 position: relative;
@@ -187,11 +186,6 @@ height: 200%;
 background: linear-gradient(45deg, transparent, rgba(212, 168, 83, 0.1), transparent);
 transform: rotate(45deg);
 animation: qiFlow 3s linear infinite;
-}
-
-@keyframes qiFlow {
-0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 /* 卡片 */
@@ -488,6 +482,7 @@ padding: 16px;
 
 .modal.show {
 display: flex;
+animation: fadeIn 0.3s ease-out;
 }
 
 .modal-bg {
@@ -495,6 +490,7 @@ position: absolute;
 inset: 0;
 background: rgba(10, 14, 20, 0.95);
 backdrop-filter: blur(8px);
+animation: fadeIn 0.3s ease-out;
 }
 
 .modal-content {
@@ -504,6 +500,44 @@ max-width: 600px;
 width: 100%;
 max-height: 90vh;
 overflow-y: auto;
+animation: scrollIn 0.4s ease-out;
+}
+
+/* 古风边框 */
+.ancient-border {
+position: relative;
+border: 1px solid rgba(212, 168, 83, 0.3);
+border-radius: 8px;
+}
+
+.ancient-border::before {
+content: '';
+position: absolute;
+top: -2px;
+left: -2px;
+right: -2px;
+bottom: -2px;
+border: 1px solid rgba(212, 168, 83, 0.1);
+border-radius: 10px;
+pointer-events: none;
+}
+
+/* 灵气粒子效果 */
+.qi-particles {
+position: relative;
+overflow: hidden;
+}
+
+.qi-particles::after {
+content: '';
+position: absolute;
+inset: 0;
+background-image: 
+  radial-gradient(circle at 20% 20%, rgba(212, 168, 83, 0.1) 0%, transparent 20%),
+  radial-gradient(circle at 80% 80%, rgba(90, 126, 122, 0.1) 0%, transparent 20%),
+  radial-gradient(circle at 40% 60%, rgba(220, 20, 60, 0.1) 0%, transparent 20%);
+animation: cloudFloat 15s ease-in-out infinite;
+pointer-events: none;
 }
 </style>
 </head>
@@ -512,11 +546,39 @@ overflow-y: auto;
 <div class="stars"></div>
 
 <div class="relative z-10 min-h-screen flex flex-col">
+<!-- 修炼数据统计面板 -->
+<div class="sticky top-0 z-40 glass-card mx-2 md:mx-4 mt-2 md:mt-3 rounded-xl qi-flow">
+<div class="max-w-7xl mx-auto px-3 md:px-6 py-2">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center">
+<div class="p-1 md:p-2 rounded-lg bg-ink/30">
+<div class="text-paper/50 text-xs mb-1">当前境界</div>
+<div class="text-gold font-brush" id="statRealm">练气期</div>
+<div class="text-jade text-xs" id="statRealmLevel">初期</div>
+</div>
+<div class="p-1 md:p-2 rounded-lg bg-ink/30">
+<div class="text-paper/50 text-xs mb-1">修为值</div>
+<div class="text-jade font-brush" id="statCultivation">0/1000</div>
+<div class="progress-bar h-1 mt-1">
+<div class="progress-fill" id="statCultivationBar" style="width: 0%"></div>
+</div>
+</div>
+<div class="p-1 md:p-2 rounded-lg bg-ink/30">
+<div class="text-paper/50 text-xs mb-1">已阅读章节</div>
+<div class="text-spirit font-brush" id="statChapters">0</div>
+</div>
+<div class="p-1 md:p-2 rounded-lg bg-ink/30">
+<div class="text-paper/50 text-xs mb-1">所属门派</div>
+<div class="text-azure font-brush" id="statSect">未加入</div>
+</div>
+</div>
+</div>
+</div>
+
 <!-- 顶部导航 -->
-<header class="sticky top-0 z-50 glass-card mx-2 md:mx-4 mt-2 md:mt-3 rounded-xl">
+<header class="sticky top-16 z-50 glass-card mx-2 md:mx-4 mt-2 md:mt-3 rounded-xl qi-flow">
 <div class="max-w-7xl mx-auto px-3 md:px-6 py-3 flex items-center justify-between">
 <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
-<div class="taiji w-8 h-8 md:w-10 md:h-10"></div>
+<div class="taiji w-8 h-8 md:w-10 md:h-10 animate-float"></div>
 <h1 class="font-brush text-xl md:text-2xl text-gold">太虚仙门</h1>
 </div>
 
@@ -529,12 +591,16 @@ overflow-y: auto;
 <a class="nav-link" onclick="showPage('legend')">神仙列传</a>
 <a class="nav-link" onclick="showPage('practice')">修行中心</a>
 <a class="nav-link" onclick="showPage('trial')">试炼场</a>
+<a class="nav-link" onclick="showPage('news')">修仙资讯</a>
+<a class="nav-link" onclick="showPage('community')">修仙社区</a>
+<a class="nav-link" onclick="showPage('tools')">修仙工具</a>
 <a class="nav-link" onclick="showPage('pig')">猪蹄文化</a>
+<a class="nav-link" onclick="showPage('english')">英语学习</a>
 </nav>
 
 <div class="flex items-center gap-3">
-<button class="text-sm px-3 py-1 rounded-lg border border-gold/30 text-gold hover:bg-gold/10" id="langToggle" onclick="toggleLanguage()">EN</button>
-<button class="mobile-menu-btn hidden w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 text-gold items-center justify-center" onclick="toggleMobileMenu()">
+<button class="text-sm px-3 py-1 rounded-lg border border-gold/30 text-gold hover:bg-gold/10 transition-all duration-300" id="langToggle" onclick="toggleLanguage()">EN</button>
+<button class="mobile-menu-btn hidden w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 text-gold items-center justify-center transition-all duration-300 hover:bg-gold/20" onclick="toggleMobileMenu()">
 <i class="fas fa-bars"></i>
 </button>
 </div>
@@ -556,7 +622,11 @@ overflow-y: auto;
 <a class="nav-link text-xl font-brush" onclick="showPage('legend'); toggleMobileMenu();">神仙列传</a>
 <a class="nav-link text-xl font-brush" onclick="showPage('practice'); toggleMobileMenu();">修行中心</a>
 <a class="nav-link text-xl font-brush" onclick="showPage('trial'); toggleMobileMenu();">试炼场</a>
+<a class="nav-link text-xl font-brush" onclick="showPage('news'); toggleMobileMenu();">修仙资讯</a>
+<a class="nav-link text-xl font-brush" onclick="showPage('community'); toggleMobileMenu();">修仙社区</a>
+<a class="nav-link text-xl font-brush" onclick="showPage('tools'); toggleMobileMenu();">修仙工具</a>
 <a class="nav-link text-xl font-brush" onclick="showPage('pig'); toggleMobileMenu();">猪蹄文化</a>
+<a class="nav-link text-xl font-brush" onclick="showPage('english'); toggleMobileMenu();">英语学习</a>
 </div>
 </div>
 
@@ -564,20 +634,20 @@ overflow-y: auto;
 <main class="flex-1 px-2 md:px-4 py-4 md:py-6">
 <!-- 首页 -->
 <div id="page-home" class="page active max-w-7xl mx-auto">
-<div class="grid lg:grid-cols-2 gap-6 md:gap-10 items-center mb-8 md:mb-12">
+<div class="grid lg:grid-cols-2 gap-6 md:gap-10 items-center mb-8 md:mb-12 qi-particles">
 <div class="space-y-5 animate-fade">
 <div>
 <p class="text-jade text-sm mb-2 tracking-widest">问道长生 · 修真入门</p>
-<h2 class="font-brush text-3xl md:text-5xl text-paper leading-tight">
+<h2 class="font-brush text-3xl md:text-5xl text-paper leading-tight animate-float">
 天地有大美<br/><span class="text-gold">修真可长生</span>
 </h2>
 </div>
-<div class="quote text-sm md:text-base">
+<div class="quote text-sm md:text-base ancient-border p-4">
 <p class="mb-2 font-brush text-gold">「抱朴子曰：」</p>
 <p>夫求长生，修至道，诀在于志，不在于富贵名利。</p>
 </div>
 <div class="flex flex-wrap gap-3">
-<button class="btn-gold" onclick="showPage('practice')">
+<button class="btn-gold animate-pulse-slow" onclick="showPage('practice')">
 <i class="fas fa-om"></i>开始修行
 </button>
 <button class="btn-jade" onclick="showPage('realm')">
@@ -587,31 +657,32 @@ overflow-y: auto;
 </div>
 <div class="flex justify-center">
 <div class="relative">
-<div class="w-40 md:w-52 h-40 md:h-52 rounded-full border border-gold/30 flex items-center justify-center">
+<div class="w-40 md:w-52 h-40 md:h-52 rounded-full border border-gold/30 flex items-center justify-center animate-float">
 <div class="taiji"></div>
 </div>
+<div class="absolute inset-0 rounded-full border border-gold/20 animate-ping"></div>
 </div>
 </div>
 </div>
 
 <!-- 功能入口 -->
 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-<div class="feature-card" onclick="showPage('realm')">
+<div class="feature-card animate-fade" onclick="showPage('realm')">
 <div class="text-jade text-2xl mb-3"><i class="fas fa-mountain"></i></div>
 <h3 class="font-brush text-xl text-paper mb-2">境界体系</h3>
-<p class="text-paper/60 text-sm">由凡入仙，历经七大境界</p>
+<p class="text-paper/60 text-sm">由凡入仙，历经九大境界</p>
 </div>
-<div class="feature-card" onclick="showPage('technique')">
+<div class="feature-card animate-fade" style="animation-delay: 0.1s" onclick="showPage('technique')">
 <div class="text-gold text-2xl mb-3"><i class="fas fa-scroll"></i></div>
 <h3 class="font-brush text-xl text-paper mb-2">功法秘籍</h3>
 <p class="text-paper/60 text-sm">修炼之法，择一而修</p>
 </div>
-<div class="feature-card" onclick="showPage('alchemy')">
+<div class="feature-card animate-fade" style="animation-delay: 0.2s" onclick="showPage('alchemy')">
 <div class="text-vermilion text-2xl mb-3"><i class="fas fa-mortar-pestle"></i></div>
 <h3 class="font-brush text-xl text-paper mb-2">丹药宝典</h3>
 <p class="text-paper/60 text-sm">灵丹妙药，助益修行</p>
 </div>
-<div class="feature-card" onclick="showPage('practice')">
+<div class="feature-card animate-fade" style="animation-delay: 0.3s" onclick="showPage('practice')">
 <div class="text-spirit text-2xl mb-3"><i class="fas fa-om"></i></div>
 <h3 class="font-brush text-xl text-paper mb-2">修行中心</h3>
 <p class="text-paper/60 text-sm">打坐冥想，突破境界</p>
@@ -619,25 +690,25 @@ overflow-y: auto;
 </div>
 
 <!-- 今日运势 -->
-<div class="glass-card p-5 md:p-6">
+<div class="glass-card p-5 md:p-6 qi-flow mb-8">
 <h3 class="font-brush text-lg md:text-xl text-paper mb-4 text-center">今日修真运势</h3>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
-<div class="p-3 md:p-4 rounded-xl bg-jade/10 border border-jade/20">
+<div class="p-3 md:p-4 rounded-xl bg-jade/10 border border-jade/20 hover:bg-jade/20 transition-all duration-300">
 <div class="text-jade text-xl mb-1"><i class="fas fa-sun"></i></div>
 <div class="text-paper/70 text-xs mb-1">宜修炼</div>
 <div class="text-jade font-brush">吐纳打坐</div>
 </div>
-<div class="p-3 md:p-4 rounded-xl bg-gold/10 border border-gold/20">
+<div class="p-3 md:p-4 rounded-xl bg-gold/10 border border-gold/20 hover:bg-gold/20 transition-all duration-300">
 <div class="text-gold text-xl mb-1"><i class="fas fa-mortar-pestle"></i></div>
 <div class="text-paper/70 text-xs mb-1">宜炼丹</div>
 <div class="text-gold font-brush">聚气丹</div>
 </div>
-<div class="p-3 md:p-4 rounded-xl bg-vermilion/10 border border-vermilion/20">
+<div class="p-3 md:p-4 rounded-xl bg-vermilion/10 border border-vermilion/20 hover:bg-vermilion/20 transition-all duration-300">
 <div class="text-vermilion text-xl mb-1"><i class="fas fa-bolt"></i></div>
 <div class="text-paper/70 text-xs mb-1">忌</div>
 <div class="text-vermilion font-brush">动武争斗</div>
 </div>
-<div class="p-3 md:p-4 rounded-xl bg-azure/10 border border-azure/20">
+<div class="p-3 md:p-4 rounded-xl bg-azure/10 border border-azure/20 hover:bg-azure/20 transition-all duration-300">
 <div class="text-azure text-xl mb-1"><i class="fas fa-star"></i></div>
 <div class="text-paper/70 text-xs mb-1">机缘</div>
 <div class="text-azure font-brush">遇贵人</div>
@@ -645,8 +716,23 @@ overflow-y: auto;
 </div>
 </div>
 
+<!-- 世界观简介 -->
+<div class="glass-card p-5 md:p-6 mb-8">
+<h3 class="font-brush text-lg md:text-xl text-paper mb-4 text-center">世界观简介</h3>
+<div class="space-y-3 text-sm md:text-base">
+<p class="text-paper/80">本修仙世界设定融合了经典仙侠与玄幻元素，构建了一个完整的世界观体系。</p>
+<p class="text-paper/80">从现代末法时代，到先秦炼器时代的鼎盛，再到未来灵气复苏，展现了修仙文明的兴衰与传承。</p>
+<p class="text-paper/80">通过科学与修仙理论的融合，为修仙现象提供了合理的解释，使整个世界观更加完整和自洽。</p>
+</div>
+<div class="mt-4 flex justify-center">
+<button class="btn-ancient" onclick="showWorldviewInfo()">
+<i class="fas fa-book"></i>了解更多
+</button>
+</div>
+</div>
+
 <!-- 名言 -->
-<div class="mt-6 p-5 rounded-xl bg-gold/5 border-l-4 border-gold">
+<div class="mt-6 p-5 rounded-xl bg-gold/5 border-l-4 border-gold qi-particles">
 <p class="text-paper/80 text-center text-sm md:text-base">「道可道，非常道；名可名，非常名。」</p>
 <p class="text-gold text-xs text-center mt-2">——《道德经》</p>
 </div>
@@ -870,6 +956,12 @@ overflow-y: auto;
 <button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="checkBottleneck()">
 <span class="text-gold font-brush">境界瓶颈</span> - 查看突破要求
 </button>
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="generateNPC()">
+<span class="text-gold font-brush">随机NPC</span> - 生成随机修仙者
+</button>
+<button class="w-full text-left p-2 rounded-lg border border-paper/20 hover:border-gold/30" onclick="generateSecretLand()">
+<span class="text-gold font-brush">随机秘境</span> - 生成随机秘境
+</button>
 </div>
 </div>
 <div class="glass-card p-4">
@@ -1022,6 +1114,56 @@ overflow-y: auto;
 
 <div id="pigContent"></div>
 </div>
+
+<!-- 修仙资讯页 -->
+<div id="page-news" class="page max-w-7xl mx-auto">
+<div class="text-center mb-6">
+<h2 class="font-brush text-2xl md:text-3xl text-paper mb-2">修仙资讯</h2>
+<p class="text-paper/60 text-sm">了解修仙界的最新动态</p>
+</div>
+
+<div class="space-y-4" id="newsList"></div>
+</div>
+
+<!-- 修仙社区页 -->
+<div id="page-community" class="page max-w-7xl mx-auto">
+<div class="text-center mb-6">
+<h2 class="font-brush text-2xl md:text-3xl text-paper mb-2">修仙社区</h2>
+<p class="text-paper/60 text-sm">与其他修仙者交流心得</p>
+</div>
+
+<div class="space-y-4" id="communityContent"></div>
+</div>
+
+<!-- 修仙工具页 -->
+<div id="page-tools" class="page max-w-7xl mx-auto">
+<div class="text-center mb-6">
+<h2 class="font-brush text-2xl md:text-3xl text-paper mb-2">修仙工具</h2>
+<p class="text-paper/60 text-sm">辅助修行的实用工具</p>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4" id="toolsList"></div>
+</div>
+
+<!-- 英语学习页 -->
+<div id="page-english" class="page max-w-7xl mx-auto">
+<div class="text-center mb-6">
+<h2 class="font-brush text-2xl md:text-3xl text-paper mb-2">英语学习中心</h2>
+<p class="text-paper/60 text-sm">提升英语能力，开启语言之旅</p>
+</div>
+
+<div class="flex flex-wrap justify-center gap-2 mb-6">
+<button class="px-4 py-2 rounded-lg border border-gold/30 text-gold bg-gold/10" onclick="showEnglishTab('vocabulary')">词汇学习</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showEnglishTab('grammar')">语法学习</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showEnglishTab('conversation')">对话练习</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showEnglishTab('games')">英语游戏</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showEnglishTab('resources')">学习资源</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showEnglishTab('study-plan')">学习计划</button>
+<button class="px-4 py-2 rounded-lg border border-paper/20 text-paper/60 hover:border-gold/30" onclick="showEnglishTab('tips')">学习技巧</button>
+</div>
+
+<div id="englishContent" class="space-y-6"></div>
+</div>
 </main>
 
 <!-- 页脚 -->
@@ -1037,7 +1179,7 @@ overflow-y: auto;
 </div>
 
 <!-- Optimized JavaScript -->
-<script src="app.js" defer></script>
+<script type="module" src="src/app.js" defer></script>
 
 
 </body>
