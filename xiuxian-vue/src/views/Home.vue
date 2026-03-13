@@ -212,7 +212,7 @@ const realmProgressPercent = computed(() => {
 
 <style scoped>
 .home-page {
-  padding-bottom: 80px;
+  padding-bottom: 100px;
 }
 
 .glass-card {
