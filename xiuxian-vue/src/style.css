@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: #0a0e14;
+  --color-paper: #f5f0e6;
+  --color-vermilion: #c53d43;
+  --color-jade: #5a7e7a;
+  --color-gold: #d4a853;
+  --color-azure: #4a6fa5;
+  --color-mystic: #2d3a4a;
+  --color-spirit: #7eb8a2;
+}
+
+body {
+  font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  background: linear-gradient(135deg, var(--color-ink) 0%, #1a1a2e 50%, var(--color-ink) 100%);
+  color: var(--color-paper);
+  min-height: 100vh;
+}
